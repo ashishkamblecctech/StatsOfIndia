@@ -13,11 +13,7 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-
-struct RegionInfo {
-    QString filePath;
-    float r, g, b, statePopulation, stateEducation, stateArea;
-};
+#include "StatsDataReader.h"
 
 class StatsOfIndia : public QMainWindow
 {
@@ -29,7 +25,7 @@ public:
 
 private:
     void setupUi();
-    void setupTableModel(const QStringList& stateNames, const QList<int>& stateValues);
+    void setupTableModel(const QStringList& stateNames, const QList<long>& stateValues);
     void handleComboBoxChange(int index);
 
 private:
@@ -49,6 +45,17 @@ private:
     QVector<GLfloat> mVertices;
     QVector<GLfloat> mColors;
 
-    /*QStringList stateNames;
-    QList<int> stateValues;*/
+    std::vector<std::string> stateNames;
+    std::vector<long> statePopulation;
+    std::vector<float> stateEducation;
+    std::vector<float> stateArea;
+
+    std::vector<long> stateActualPopulation;
+    std::vector<float> stateActualEducation;
+    std::vector<float> stateActualArea;
+
+    std::vector <RegionInfo1> regions1;
+
+    QStringList stateNames1;
+    QList<long> stateValues1;
 };

@@ -26,9 +26,10 @@ public:
     ~OpenGLWindow();
     void updateShape(QVector<GLfloat>& vertices, QVector<GLfloat>& colors);
     void mouseMoveEvent(QMouseEvent* event);
-    void addFilePoints(QString filepath, float r, float g, float b, float stateValue);
-    void drawVertices(const QVector<GLfloat>& vertices, const QVector<GLfloat>& colors);
-    void drawRegions();
+    void addFilePoints(std::string filepath, float r, float g, float b, float stateValue);
+    void clearRegions();
+    void shaderWatcher();
+    QString readShader(QString filepath);
 
 protected:
     void paintGL() override;
@@ -37,13 +38,9 @@ protected:
 
 private:
     void reset();
-    //void setupMatrix();
-    /*void drawVertices(const QVector<GLfloat>& vertices, const QVector<GLfloat>& colors);*/
+   
     void zoomOut();
     void zoomIn();
-    /*void addFilePoints(QString s, float a, float b, float c);*/
-    
-
 
 private:
     bool mAnimating = false;
@@ -68,5 +65,5 @@ private:
     float scaleFactor=1;
     
     QVector <Region> regionsToDraw;
-    /*regions.verice*/
+    QFileSystemWatcher* mShaderWatcher;
 };
