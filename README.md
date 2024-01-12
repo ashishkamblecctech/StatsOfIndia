@@ -21,7 +21,7 @@ The StatsOfIndia Visualization Project is a C++ project that utilizes Qt and Ope
 
 1. **Build the DLL:**
    - Open the `StatsDataReader` project in your preferred C++ development environment.
-   - Build the project to generate the DLL file (`STATSDATAREADER_API.dll`).
+   - Build the project to generate the DLL file.
 
 2. **Build the GUI Application:**
    - Open the `StatsOfIndia` project in Qt Creator or your preferred Qt development environment.
