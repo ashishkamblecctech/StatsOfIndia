@@ -61,11 +61,6 @@ void StatsOfIndia::setupUi()
     mGridLayout->addWidget(mOpenGLWidget, 0, 0, 2, 1); // Spanning two rows
 }
 
-
-
-
-
-
 void StatsOfIndia::setupTableModel(const QStringList& stateNames, const QList<long>& stateValues)
 {
     // Create a standard item model

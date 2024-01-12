@@ -1,0 +1,15 @@
+<map id="framework.h" name="framework.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="58,5,149,32"/>
+<area shape="rect" id="Node000002" href="$_stats_data_reader_8cpp.html" title=" " alt="" coords="5,229,151,256"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,48,87,155,81,229,76,229,82,154,96,47"/>
+<area shape="rect" id="Node000003" href="$pch_8h.html" title=" " alt="" coords="154,80,207,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="130,41,169,78,166,82,126,45"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="147,117,124,135,106,156,89,195,82,230,77,229,84,193,101,153,121,131,143,113"/>
+<area shape="rect" id="Node000004" href="$_stats_data_reader_8h.html" title=" " alt="" coords="115,155,246,181"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="183,122,183,154,178,154,178,122"/>
+<area shape="rect" id="Node000005" href="$dllmain_8cpp.html" title=" " alt="" coords="270,155,358,181"/>
+<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="218,112,292,152,289,156,216,117"/>
+<area shape="rect" id="Node000006" href="$pch_8cpp.html" title=" " alt="" coords="382,155,449,181"/>
+<area shape="poly" id="edge7_Node000003_Node000006" title=" " alt="" coords="223,105,382,154,380,159,221,110"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="152,193,98,231,94,227,149,188"/>
+</map>

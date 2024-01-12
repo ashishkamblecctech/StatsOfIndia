@@ -10,8 +10,9 @@ class QOpenGLShader;
 class QOpenGLShaderProgram;
 
 struct Region {
-    QVector<GLfloat> vertices;
-    QVector<GLfloat> colors;
+    QVector<GLfloat> mVertices;
+    QVector<GLfloat> mNormals; //Vertices for lighting effects
+    QVector<GLfloat> mColors;
 };
 
 class OpenGLWindow : public QOpenGLWidget, protected QOpenGLFunctions
@@ -24,7 +25,6 @@ signals:
 public:
     OpenGLWindow(const QColor& background, QWidget* parent);
     ~OpenGLWindow();
-    void updateShape(QVector<GLfloat>& vertices, QVector<GLfloat>& colors);
     void mouseMoveEvent(QMouseEvent* event);
     void addFilePoints(std::string filepath, float r, float g, float b, float stateValue);
     void clearRegions();
@@ -35,6 +35,7 @@ protected:
     void paintGL() override;
     void initializeGL() override;
     void wheelEvent(QWheelEvent* event) override;
+
 
 private:
     void reset();
@@ -55,13 +56,15 @@ private:
     GLint m_posAttr = 0;
     GLint m_colAttr = 0;
     GLint m_matrixUniform = 0;
+    GLint m_normalAttr;          
+    GLint m_lightPositionUniform; 
+    GLint m_lightDirectionUniform;
+
     QColor mBackground;
     QQuaternion rotationAngle;
     QPoint lastPos;
     QMetaObject::Connection mContextWatchConnection;
 
-    QVector<GLfloat> mVertices;
-    QVector<GLfloat> mColors;
     float scaleFactor=1;
     
     QVector <Region> regionsToDraw;

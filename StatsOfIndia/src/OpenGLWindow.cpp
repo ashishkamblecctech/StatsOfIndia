@@ -45,18 +45,29 @@ void OpenGLWindow::initializeGL()
     mProgram = new QOpenGLShaderProgram(this);
     mProgram->addShaderFromSourceCode(QOpenGLShader::Vertex, vertexShaderSource);
     mProgram->addShaderFromSourceCode(QOpenGLShader::Fragment, fragmentShaderSource);
+    mNormalAttr = mProgram->attributeLocation("normalAttr");
     mProgram->link();
 
     m_posAttr = mProgram->attributeLocation("posAttr");
-    Q_ASSERT(m_posAttr != -1);
+
     m_colAttr = mProgram->attributeLocation("colAttr");
-    Q_ASSERT(m_colAttr != -1);
+
     m_matrixUniform = mProgram->uniformLocation("matrix");
-    Q_ASSERT(m_matrixUniform != -1);
+
+    if (m_posAttr == -1 || m_colAttr == -1 || m_matrixUniform == -1) {
+        qDebug() << "Shader attribute or uniform location error.";
+        // Handle the error appropriately, e.g., return or throw an exception
+    }
 }
 
 void OpenGLWindow::paintGL()
 {
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        qDebug() << "OpenGL error:" << error;
+    }
+
+
     glClear(GL_COLOR_BUFFER_BIT);
     mProgram->bind();
 
@@ -66,19 +77,23 @@ void OpenGLWindow::paintGL()
     matrix.rotate(rotationAngle);
     matrix.scale(scaleFactor);
     mProgram->setUniformValue(m_matrixUniform, matrix);
+    
  
     // Iterate through each region and draw its vertices
     for (const Region& region : regionsToDraw) {
-        glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, region.vertices.data());
-        glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, region.colors.data());
+        glVertexAttribPointer(m_posAttr, 3, GL_FLOAT, GL_FALSE, 0, region.mVertices.data());
+        glVertexAttribPointer(m_colAttr, 3, GL_FLOAT, GL_FALSE, 0, region.mColors.data());
+        glVertexAttribPointer(mNormalAttr, 3, GL_FLOAT, GL_FALSE, 0, region.mNormals.data());// Adding lighting effects
 
         glEnableVertexAttribArray(m_posAttr);
         glEnableVertexAttribArray(m_colAttr);
+        glEnableVertexAttribArray(mNormalAttr); // Adding lighting effects
 
-        glDrawArrays(GL_POLYGON, 0, region.vertices.size() / 3);
+        glDrawArrays(GL_POLYGON, 0, region.mVertices.size() / 3);
 
         glDisableVertexAttribArray(m_colAttr);
         glDisableVertexAttribArray(m_posAttr);
+        glDisableVertexAttribArray(mNormalAttr); // Adding lighting effects
     }
     update();
 }
@@ -94,6 +109,9 @@ void OpenGLWindow::addFilePoints(std::string filepath, float r, float g, float b
     }
     QTextStream in(&file);
     Region region;
+
+    QVector3D normal(0.0f, 0.0f, 1.0f);
+
     while (!in.atEnd())
     {
         QString line = in.readLine();//It reads the 1st line
@@ -108,22 +126,18 @@ void OpenGLWindow::addFilePoints(std::string filepath, float r, float g, float b
             float y = coordinates[1].toFloat();
             float z = stateValue;
 
-            region.vertices << x << y << 0;
-            region.vertices << x << y << -z;
-            region.colors << r << g << b;
-            region.colors << r << g << b;
-            
+            region.mVertices << x << y << 0;
+            region.mVertices << x << y << -z;
+            region.mColors << r << g << b;
+            region.mColors << r-0.2 << g-0.2 << b-0.2;
+
+            region.mNormals << normal.x() << normal.y() << normal.z(); // Use the constant normal vector
+            region.mNormals << normal.x() << normal.y() << normal.z();
         }
     }
     regionsToDraw.append(region);
-    file.close();
-}
 
-void OpenGLWindow::updateShape(QVector<GLfloat>& vertices, QVector<GLfloat>& colors)
-{
-    mVertices = vertices;
-    mColors = colors;
-    emit shapesUpdated();
+    file.close();
 }
 
 void OpenGLWindow::mouseMoveEvent(QMouseEvent* event)
@@ -141,7 +155,6 @@ void OpenGLWindow::mouseMoveEvent(QMouseEvent* event)
     }
     lastPos = event->pos();
 }
-
 
 void OpenGLWindow::clearRegions()
 {
