@@ -36,3 +36,12 @@ The StatsOfIndia Visualization Project is a C++ project that utilizes Qt and Ope
 - Choose a parameter (Population, Education, or Area) from the dropdown menu.
 - The OpenGL window will display a graphical representation of the chosen parameter for each state.
 - Use the mouse to interact with the 3D visualization, and the mouse wheel to zoom in and out.
+
+## Class Diagram
+
+![StatsOfIndia](https://github.com/ashishkamblecctech/StatsOfIndia/assets/149309502/5f8a7da4-1df5-46ab-a4ec-2be052e9c59f)
+
+## Output Video
+
+https://github.com/ashishkamblecctech/StatsOfIndia/assets/149309502/67d6673b-0afb-41e1-a539-6c2cab20c1d8
+
